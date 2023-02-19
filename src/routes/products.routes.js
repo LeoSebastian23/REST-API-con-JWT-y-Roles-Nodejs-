@@ -1,6 +1,22 @@
 import {Router} from 'express'
+import { createProducts, deleteProducts, getOneProduct, getProducts, updateProducts } from '../controllers/products.controller.js'
+
+
 const router = Router()
 
-router.get('/',(req,res)=> res.json('get products'))
+// Devuelve TODOS los productos 
+router.get('/products', getProducts) 
+
+// Crear producto.
+router.post('/products', createProducts)
+
+// Actualizar producto.
+router.put('/products/:id', updateProducts)
+
+// Eliminar producto.
+router.delete('/products/:id', deleteProducts)
+
+// Devuelve UN producto.
+router.get('/products/:id', getOneProduct)
 
 export default router
