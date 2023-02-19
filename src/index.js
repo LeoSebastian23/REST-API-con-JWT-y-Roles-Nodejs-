@@ -1,7 +1,6 @@
-import express from 'express'
+// Este archivo es donde comienza la aplicacion
 
-const app = express()
+import app from './app'
 
 app.listen(2000)
-
 console.log('server listen on port', 2000)
