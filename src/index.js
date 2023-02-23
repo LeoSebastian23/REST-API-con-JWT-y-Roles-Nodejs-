@@ -1,6 +1,5 @@
 // Este archivo es donde comienza la aplicacion
 
-
 import app from './app'
 
 import { connectDB } from './connection/db.js'

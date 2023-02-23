@@ -1,22 +1,22 @@
-// import {
-//     uploadImage,
-//     deleteImage
-// } from "../library/cloudinary.js";
+import {
+    uploadImage,
+    deleteImage
+} from "../library/cloudinary.js";
 import Product from "../models/product.model.js";
-// import fs from 'fs-extra' // modulo utiliza promesas
+ import fs from 'fs-extra' // modulo utiliza promesas
+
 
 
 // OBTIENE LOS PRODUCTOS
 export const getProducts = async (req, res) => {
-    res.json('get all products')
-    // try {
-    //     const products = await Product.find();
-    //     res.send(products);
-    // } catch (error) {
-    //     return res.status(500).json({
-    //         message: error.message,
-    //     });
-    // }
+    try {
+        const products = await Product.find();
+        res.send(products);
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+        });
+    }
 };
 
 // CREA PRODUCTO
@@ -42,7 +42,6 @@ export const createProducts = async (req, res) => {
             }
             await fs.remove(req.files.imagen.tempFilePath) // elimina archivo, una vez subido a cloudinary
         }
-
         const newProduct = new Product({
             titulo,
             categoria,
@@ -69,7 +68,7 @@ export const updateProducts = async (req, res) => {
             new: true,
         }); //devuelve objeto actualizado
         console.log(producto);
-        return res.send(producto);
+        return res.status(200).json(producto);
     } catch (error) {
         return res.status(500).json({
             message: error.message,
@@ -81,13 +80,14 @@ export const updateProducts = async (req, res) => {
 export const deleteProducts = async (req, res) => {
     try {
         const productRemove = await Product.findByIdAndDelete(req.params.id);
-
+        
         if (!productRemove) return res.sendStatus(404);
 
         if (productRemove.imagen.public_id) { //si tiene imagen y public_id se elimina la imagen de cloudinary
             await deleteImage(productRemove.imagen.public_id)
         }
-        return res.sendStatus(204);
+        res.json("Producto eliminado")
+        return res.sendStatus(204); 
 
     } catch (error) {
         return res.status(500).json({

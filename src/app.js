@@ -1,11 +1,23 @@
 // Este archivo configura la aplicacion de express
 import express from 'express'
 import morgan from 'morgan'
+import fileUpload from 'express-fileupload'
+import productsRoutes from './routes/products.routes.js'
+import authRoutes from './routes/auth.routes.js'
 
 const app = express()
 
-import productsRoutes from './routes/products.routes'
 app.use(morgan('dev')) 
+// middlewares
+app.use(express.json())
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './upload'
+}))
+
+// routes
+app.use(productsRoutes)
+app.use(authRoutes)
 
 app.get('/',(req,res)=>{
     res.json({
@@ -14,7 +26,5 @@ app.get('/',(req,res)=>{
         description : "",
 })
 })
-
-app.use('/products',productsRoutes)
 
 export default app
