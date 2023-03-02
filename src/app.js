@@ -5,7 +5,10 @@ import fileUpload from 'express-fileupload'
 import productsRoutes from './routes/products.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
+import { createRoles } from "./library/initialSetup";
+
 const app = express()
+createRoles();
 
 app.use(morgan('dev')) 
 // middlewares

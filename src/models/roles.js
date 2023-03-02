@@ -1,7 +1,7 @@
 import {Schema, model} from 'mongoose'
 
 const RolSchema = new Schema({
-    nameRol:{
+    name:{
         type: String,
         unique: true
     },

@@ -23,14 +23,14 @@ const userSchema = new Schema({
 })
 
 // Funcion estatica para cifrar contraseñas
-userSchema.static.encryptPassword = async (password) => { // El usuario me da una contraseña 
+userSchema.statics.encryptPassword = async (password) => { // El usuario me da una contraseña 
     const salt = await bcrypt.genSalt(10) // Utilizo el metodo bcrypt para tomar esa contraseña 
     return await bcrypt.hash(password,salt) // Devuelve un texto cifrado
 }
 
 // Funcion estatica para comparar que la contraseña ingresada no exista
-userSchema.static.comparePassword = async (password, receivedPassword) =>{
+userSchema.statics.comparePassword = async (password, receivedPassword) =>{
     await bcrypt.compare(password,receivedPassword)
 }
 
-export default model('User',userSchema)
+export default model('User', userSchema)
